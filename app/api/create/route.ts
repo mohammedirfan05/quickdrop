@@ -17,7 +17,7 @@ export async function POST(
 
   if (!success) {
     return NextResponse.json(
-      { error: "Too many requests — slow down" },
+      { error: "Too many requests. Please slow down." },
       {
         status: 429,
         headers: { "Retry-After": String(Math.ceil((reset - Date.now()) / 1000)) },

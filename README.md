@@ -1,36 +1,132 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ClipLink
+
+> Ultra-fast clipboard sharing. Paste. Share. Done.
+
+A minimal, zero-friction clipboard sharing tool built for developers. Paste any text or code, get a 6-character share code, someone else enters the code - instant transfer. No login, no accounts, ephemeral by design.
+
+## Features
+
+- Zero friction - no login, no account, no signup
+- 6-char codes - crypto-random, collision-safe, human-readable
+- Syntax highlighting - auto-detects Python, JS, TS, JSON, C++, Bash via Shiki
+- Auto-expiry - snippets self-destruct after 10 minutes
+- Rate limited - Upstash sliding window per IP
+- Responsive - works on desktop, tablet, mobile
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 15 (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS v4 + shadcn/ui |
+| Database | Upstash Redis |
+| Rate Limiting | @upstash/ratelimit |
+| Syntax Highlighting | Shiki |
+| Deployment | Vercel |
 
 ## Getting Started
 
-First, run the development server:
+### 1. Clone & install
+
+```bash
+git clone <repo>
+cd pastebin
+npm install
+```
+
+### 2. Set up Upstash Redis
+
+1. Go to [console.upstash.com](https://console.upstash.com/redis)
+2. Create a new Redis database
+3. Copy the REST URL and REST token
+
+### 3. Configure environment variables
+
+```bash
+cp .env.example .env.local
+# Fill in your Upstash credentials
+```
+
+### 4. Run locally
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## API
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### `POST /api/create`
 
-## Learn More
+Create a new snippet.
 
-To learn more about Next.js, take a look at the following resources:
+```json
+// Request
+{ "text": "console.log('hello')" }
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+// Response
+{ "code": "K7X2QP", "expiresAt": 1716123456789 }
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Rate limit:** 10 requests/minute per IP
 
-## Deploy on Vercel
+### `GET /api/fetch/:code`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Retrieve a snippet by code.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```json
+// Response
+{ "text": "console.log('hello')", "ttl": 542 }
+```
+
+**Rate limit:** 30 requests/minute per IP
+
+### `POST /api/highlight`
+
+Server-side syntax highlighting (used internally).
+
+```json
+// Request
+{ "text": "def hello(): print('hi')" }
+
+// Response  
+{ "html": "<pre class=\"shiki\">...</pre>", "language": "python" }
+```
+
+## Architecture
+
+```
+User submits text
+	-> POST /api/create
+	-> Rate limit check (Upstash)
+	-> Validate (non-empty, <=100KB)
+	-> Generate unique 6-char code (crypto.getRandomValues)
+	-> Store in Redis: clip:{CODE} = {text, createdAt} TTL=600s
+	-> Return { code, expiresAt }
+
+User enters code
+	-> GET /api/fetch/{code}
+	-> Rate limit check
+	-> Validate code format
+	-> Fetch from Redis (parallel: GET + TTL)
+	-> POST /api/highlight (server-side Shiki)
+	-> Display with countdown timer
+```
+
+## Deployment on Vercel
+
+```bash
+vercel env add UPSTASH_REDIS_REST_URL
+vercel env add UPSTASH_REDIS_REST_TOKEN
+vercel deploy
+```
+
+## Security
+
+- Input sanitized (null bytes, size limits)
+- Code format validated (`/^[A-Z2-9]{6}$/`)
+- HTML from Shiki is safe (server-controlled, not user HTML)
+- Security headers: `X-Frame-Options`, `X-Content-Type-Options`, `X-XSS-Protection`
+- Rate limiting on all mutation endpoints

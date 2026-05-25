@@ -33,7 +33,11 @@ export async function highlightCode(text: string): Promise<{
   try {
     const html = await codeToHtml(text, {
       lang: shikiLang,
-      theme: "github-dark",
+      themes: {
+        light: "github-light",
+        dark: "github-dark",
+      },
+      defaultColor: false,
     });
 
     return { html, language };
