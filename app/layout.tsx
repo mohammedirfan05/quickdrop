@@ -26,19 +26,90 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "QuickDrop: Paste. Share. Done.",
+  metadataBase: new URL("https://codesharepro.vercel.app"),
+
+  title: {
+    template: "%s | CodeSharePro",
+    default: "CodeSharePro — Instant Code & Text Sharing",
+  },
+
   description:
-    "Ultra-fast clipboard sharing. Paste any text, get a 6-character code, share instantly. No login required.",
-  keywords: ["pastebin", "clipboard", "code sharing", "snippet", "developer tool"],
+    "Share code snippets, configs, and text instantly with a 6-character code. No signup, no clutter — just paste, share, and retrieve. Free developer tool with syntax highlighting and auto-expiry.",
+
+  applicationName: "CodeSharePro",
+
+  keywords: [
+    "code sharing",
+    "snippet sharing",
+    "online clipboard",
+    "pastebin alternative",
+    "text sharing tool",
+    "developer tool",
+    "instant paste",
+    "temporary paste",
+    "code snippet tool",
+    "share code online",
+    "clipboard sharing",
+    "snippet manager",
+    "quick share",
+    "config sharing",
+    "code transfer",
+    "developer utility",
+    "paste tool",
+    "code exchange",
+    "syntax highlighting",
+    "ephemeral paste",
+  ],
+
+  authors: [{ name: "CodeSharePro" }],
+  creator: "CodeSharePro",
+  publisher: "CodeSharePro",
+
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+
   openGraph: {
-    title: "QuickDrop: Paste. Share. Done.",
-    description: "Ultra-fast clipboard sharing without friction.",
+    title: "CodeSharePro — Instant Code & Text Sharing",
+    description:
+      "Paste code, configs, or text — get a 6-character code to share instantly. No signup. Auto-expiring snippets with syntax highlighting.",
+    url: "https://codesharepro.vercel.app",
+    siteName: "CodeSharePro",
+    locale: "en_US",
     type: "website",
   },
-  icons: {
-    icon: "/api/favicon",
-    apple: "/api/favicon",
+
+  twitter: {
+    card: "summary_large_image",
+    title: "CodeSharePro — Paste. Share. Done.",
+    description:
+      "Share code snippets instantly with a 6-character code. No signup, no clutter. Free developer tool.",
   },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+
+  alternates: {
+    canonical: "/",
+  },
+
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-icon.png",
+  },
+
+  manifest: "/manifest.webmanifest",
 };
 
 export default function RootLayout({

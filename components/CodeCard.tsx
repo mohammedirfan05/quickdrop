@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { CheckIcon, CopyIcon } from "lucide-react";
+import { useCopyToClipboard } from "@/lib/hooks/use-copy-clipboard";
 import ExpiryBadge from "./ExpiryBadge";
 
 interface CodeCardProps {
@@ -10,28 +10,7 @@ interface CodeCardProps {
 }
 
 export default function CodeCard({ code, expiresAt }: CodeCardProps) {
-  const [copied, setCopied] = useState(false);
-  const [pulsing, setPulsing] = useState(false);
-
-  async function handleCopy() {
-    try {
-      await navigator.clipboard.writeText(code);
-    } catch {
-      const el = document.createElement("textarea");
-      el.value = code;
-      el.setAttribute("readonly", "");
-      el.style.position = "absolute";
-      el.style.left = "-9999px";
-      document.body.appendChild(el);
-      el.select();
-      document.execCommand("copy");
-      document.body.removeChild(el);
-    }
-    setCopied(true);
-    setPulsing(true);
-    setTimeout(() => setCopied(false), 2200);
-    setTimeout(() => setPulsing(false), 750);
-  }
+  const { copied, pulsing, copy } = useCopyToClipboard();
 
   return (
     <div className="code-card">
@@ -50,7 +29,7 @@ export default function CodeCard({ code, expiresAt }: CodeCardProps) {
           <span className="code-pill__text">{code}</span>
 
           <button
-            onClick={handleCopy}
+            onClick={() => copy(code)}
             aria-label={copied ? "Code copied" : "Copy code to clipboard"}
             className={`copy-button ${pulsing ? "animate-success-pulse" : ""}`}
             data-copied={copied ? "true" : "false"}
@@ -61,7 +40,8 @@ export default function CodeCard({ code, expiresAt }: CodeCardProps) {
         </div>
 
         <p className="code-card__hint">
-          Share this code with anyone to transfer the snippet instantly. It will expire automatically.
+          Share this code with anyone to transfer the snippet instantly. It will expire
+          automatically.
         </p>
       </div>
     </div>

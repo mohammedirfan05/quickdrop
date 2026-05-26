@@ -17,12 +17,14 @@ A minimal, zero-friction clipboard sharing tool built for developers. Paste any 
 
 | Layer | Technology |
 |---|---|
-| Framework | Next.js 15 (App Router) |
+| Framework | Next.js 16 (App Router) |
 | Language | TypeScript |
 | Styling | Tailwind CSS v4 + shadcn/ui |
 | Database | Upstash Redis |
 | Rate Limiting | @upstash/ratelimit |
 | Syntax Highlighting | Shiki |
+| Analytics | Vercel Analytics |
+| Performance | Vercel Speed Insights |
 | Deployment | Vercel |
 
 ## Getting Started
@@ -122,6 +124,8 @@ vercel env add UPSTASH_REDIS_REST_URL
 vercel env add UPSTASH_REDIS_REST_TOKEN
 vercel deploy
 ```
+
+The app also includes Vercel Analytics and Vercel Speed Insights via the root layout, so those metrics are available automatically when deployed on Vercel.
 
 ## Security
 

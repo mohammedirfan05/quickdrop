@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { CheckIcon, CopyIcon } from "lucide-react";
+import { useCopyToClipboard } from "@/lib/hooks/use-copy-clipboard";
 import ExpiryBadge from "./ExpiryBadge";
 
 interface SnippetDisplayProps {
@@ -17,28 +17,7 @@ export default function SnippetDisplay({
   language,
   expiresAt,
 }: SnippetDisplayProps) {
-  const [copied, setCopied] = useState(false);
-  const [pulsing, setPulsing] = useState(false);
-
-  async function handleCopy() {
-    try {
-      await navigator.clipboard.writeText(text);
-    } catch {
-      const el = document.createElement("textarea");
-      el.value = text;
-      el.setAttribute("readonly", "");
-      el.style.position = "absolute";
-      el.style.left = "-9999px";
-      document.body.appendChild(el);
-      el.select();
-      document.execCommand("copy");
-      document.body.removeChild(el);
-    }
-    setCopied(true);
-    setPulsing(true);
-    setTimeout(() => setCopied(false), 2200);
-    setTimeout(() => setPulsing(false), 750);
-  }
+  const { copied, pulsing, copy } = useCopyToClipboard();
 
   return (
     <div className="snippet-card">
@@ -51,7 +30,7 @@ export default function SnippetDisplay({
         </div>
 
         <button
-          onClick={handleCopy}
+          onClick={() => copy(text)}
           aria-label={copied ? "Text copied" : "Copy snippet text"}
           className={`copy-button copy-button--sm ${pulsing ? "animate-success-pulse" : ""}`}
           data-copied={copied ? "true" : "false"}

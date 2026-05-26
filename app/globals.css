@@ -1,7 +1,13 @@
 @import "tailwindcss";
 
+/* ========================================================================
+   DESIGN TOKENS
+   ======================================================================== */
+
 :root {
   color-scheme: light;
+
+  /* Colors */
   --background: #f7f7f4;
   --foreground: #0b0d12;
   --surface: rgba(255, 255, 255, 0.78);
@@ -16,12 +22,16 @@
   --text-secondary: #30384a;
   --text-muted: #6b7280;
   --text-placeholder: #9aa4b2;
+
+  /* Accent */
   --accent: #2563eb;
   --accent-2: #22d3ee;
   --accent-gradient: linear-gradient(135deg, #2563eb 0%, #22d3ee 100%);
   --accent-dim: rgba(37, 99, 235, 0.12);
   --accent-border: rgba(37, 99, 235, 0.26);
   --accent-text: #1d4ed8;
+
+  /* Semantic */
   --success: #10b981;
   --success-dim: rgba(16, 185, 129, 0.12);
   --success-border: rgba(16, 185, 129, 0.28);
@@ -29,10 +39,16 @@
   --warning-dim: rgba(245, 158, 11, 0.16);
   --error: #ef4444;
   --error-dim: rgba(239, 68, 68, 0.12);
+
+  /* Code */
   --code-bg: rgba(246, 248, 252, 0.95);
   --code-text: #0f172a;
+
+  /* Popover */
   --popover: rgba(255, 255, 255, 0.95);
   --popover-foreground: #111827;
+
+  /* Radii */
   --radius-xs: 8px;
   --radius-sm: 10px;
   --radius-md: 12px;
@@ -40,16 +56,28 @@
   --radius-xl: 20px;
   --radius-full: 999px;
   --radius: var(--radius-md);
+
+  /* Shadows */
   --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.06);
   --shadow-sm: 0 6px 16px rgba(15, 23, 42, 0.08);
   --shadow-md: 0 12px 32px rgba(15, 23, 42, 0.12);
   --shadow-lg: 0 22px 48px rgba(15, 23, 42, 0.16);
   --shadow-glow: 0 0 0 1px rgba(37, 99, 235, 0.1), 0 24px 60px rgba(37, 99, 235, 0.2);
   --ring: rgba(37, 99, 235, 0.28);
+
+  /* Layout */
   --max-width: 1100px;
+
+  /* Typography */
   --font-sans: var(--font-geist-sans);
   --font-heading: var(--font-plus-jakarta-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Tailwind theme tokens */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* Backgrounds */
   --bg-gradient: radial-gradient(1200px 600px at 12% -10%, rgba(37, 99, 235, 0.16), transparent 60%),
     radial-gradient(900px 500px at 88% 0%, rgba(34, 211, 238, 0.12), transparent 60%),
     radial-gradient(700px 360px at 50% 110%, rgba(37, 99, 235, 0.08), transparent 70%);
@@ -57,12 +85,9 @@
   --hero-glow: rgba(37, 99, 235, 0.22);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
-}
+/* ========================================================================
+   DARK THEME
+   ======================================================================== */
 
 .dark {
   color-scheme: dark;
@@ -110,6 +135,10 @@
   --hero-glow: rgba(96, 165, 250, 0.22);
 }
 
+/* ========================================================================
+   BASE RESET & GLOBALS
+   ======================================================================== */
+
 * {
   box-sizing: border-box;
 }
@@ -150,6 +179,52 @@ textarea::placeholder {
   color: var(--text-placeholder);
 }
 
+/* Brand selection color */
+::selection {
+  background: rgba(37, 99, 235, 0.25);
+  color: var(--text-primary);
+}
+
+.dark ::selection {
+  background: rgba(96, 165, 250, 0.3);
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ========================================================================
+   LAYOUT
+   ======================================================================== */
+
 .page {
   min-height: 100vh;
   display: flex;
@@ -165,8 +240,76 @@ textarea::placeholder {
 
 .main {
   flex: 1;
-  padding: 72px 0 108px;
+  padding: 32px 0 108px;
 }
+
+/* ========================================================================
+   NAVBAR
+   ======================================================================== */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  background: var(--surface-overlay);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+
+.navbar__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.navbar__brand:hover {
+  opacity: 0.8;
+}
+
+.navbar__logo {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-gradient);
+  color: #ffffff;
+}
+
+.navbar__name {
+  font-family: var(--font-heading);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+}
+
+.navbar__name--accent {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ========================================================================
+   HERO
+   ======================================================================== */
 
 .hero {
   margin-bottom: 0;
@@ -175,6 +318,7 @@ textarea::placeholder {
   align-items: flex-start;
   gap: 0;
   max-width: 760px;
+  padding-top: 40px;
 }
 
 .hero__eyebrow {
@@ -223,6 +367,11 @@ textarea::placeholder {
   border-radius: 14px;
   font-size: 14px;
 }
+
+/* ========================================================================
+   EDITOR
+   ======================================================================== */
+
 .editor-shell {
   margin-top: 56px;
   scroll-margin-top: 110px;
@@ -232,44 +381,15 @@ textarea::placeholder {
   scroll-margin-top: 110px;
 }
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.editor-shell {
-  scroll-margin-top: 110px;
-}
-
-#retrieve {
-  scroll-margin-top: 110px;
-}
-
-.pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  border-radius: var(--radius-full);
-  background: var(--surface-raised);
-  border: 1px solid var(--border);
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text-muted);
-}
-
 .editor {
   display: flex;
   flex-direction: column;
   gap: 22px;
 }
+
+/* ========================================================================
+   CARD SYSTEM
+   ======================================================================== */
 
 .card {
   background: var(--surface);
@@ -337,6 +457,10 @@ textarea::placeholder {
   flex-wrap: wrap;
 }
 
+/* ========================================================================
+   WINDOW CHROME
+   ======================================================================== */
+
 .window-dots {
   display: inline-flex;
   gap: 6px;
@@ -350,6 +474,10 @@ textarea::placeholder {
   border-radius: 50%;
   opacity: 0.8;
 }
+
+/* ========================================================================
+   EDITOR TEXTAREA
+   ======================================================================== */
 
 .editor-textarea {
   width: 100%;
@@ -368,6 +496,7 @@ textarea::placeholder {
 
 .editor-card {
   position: relative;
+  transition: box-shadow 0.2s ease;
 }
 
 .editor-card:focus-within {
@@ -381,9 +510,14 @@ textarea::placeholder {
   flex-wrap: wrap;
 }
 
+/* ========================================================================
+   BUTTONS
+   ======================================================================== */
+
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   padding: 0 18px;
   height: 38px;
@@ -393,8 +527,19 @@ textarea::placeholder {
   font-weight: 600;
   letter-spacing: -0.01em;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, background 0.15s ease,
-    color 0.15s ease, opacity 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease,
+    background 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.98);
 }
 
 .btn--primary {
@@ -410,7 +555,7 @@ textarea::placeholder {
 }
 
 .btn--primary:active:not(:disabled) {
-  transform: translateY(1px);
+  transform: translateY(1px) scale(0.98);
 }
 
 .btn--ghost {
@@ -447,6 +592,10 @@ textarea::placeholder {
   cursor: not-allowed;
 }
 
+/* ========================================================================
+   TOGGLE SWITCH
+   ======================================================================== */
+
 .toggle {
   display: inline-flex;
   align-items: center;
@@ -460,6 +609,11 @@ textarea::placeholder {
   font-weight: 600;
   cursor: pointer;
   transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .toggle__track {
@@ -480,7 +634,8 @@ textarea::placeholder {
   height: 14px;
   border-radius: 50%;
   background: var(--text-muted);
-  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .toggle[aria-checked="true"] {
@@ -498,6 +653,10 @@ textarea::placeholder {
   background: #ffffff;
   box-shadow: 0 2px 6px rgba(15, 23, 42, 0.2);
 }
+
+/* ========================================================================
+   KEYBOARD SHORTCUTS
+   ======================================================================== */
 
 .editor-shortcuts {
   display: flex;
@@ -520,6 +679,10 @@ kbd {
   color: var(--text-secondary);
 }
 
+/* ========================================================================
+   DIVIDER
+   ======================================================================== */
+
 .divider {
   display: flex;
   align-items: center;
@@ -540,6 +703,10 @@ kbd {
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
+
+/* ========================================================================
+   CODE INPUT
+   ======================================================================== */
 
 .input-shell {
   position: relative;
@@ -569,10 +736,18 @@ kbd {
   color: var(--accent-text);
 }
 
+.code-input:focus-visible {
+  outline: none;
+}
+
 .code-input[data-filled="true"] {
   color: var(--accent-text);
   border-color: var(--accent-border);
 }
+
+/* ========================================================================
+   CODE CARD (generated code display)
+   ======================================================================== */
 
 .code-card {
   position: relative;
@@ -636,6 +811,23 @@ kbd {
   letter-spacing: -0.01em;
 }
 
+/* ========================================================================
+   CHIPS & BADGES
+   ======================================================================== */
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
 .chip {
   display: inline-flex;
   align-items: center;
@@ -663,6 +855,10 @@ kbd {
   letter-spacing: 0.04em;
 }
 
+/* ========================================================================
+   COPY BUTTON
+   ======================================================================== */
+
 .copy-button {
   display: inline-flex;
   align-items: center;
@@ -676,15 +872,25 @@ kbd {
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, background 0.15s ease,
-    color 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease,
+    background 0.15s ease, color 0.15s ease;
   box-shadow: var(--shadow-xs);
+}
+
+.copy-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .copy-button:not([data-copied="true"]):hover {
   border-color: var(--accent-border);
   color: var(--accent-text);
   background: var(--accent-dim);
+  transform: translateY(-1px);
+}
+
+.copy-button:not([data-copied="true"]):active {
+  transform: scale(0.97);
 }
 
 .copy-button[data-copied="true"] {
@@ -700,6 +906,10 @@ kbd {
   border-radius: var(--radius-sm);
   font-size: 12px;
 }
+
+/* ========================================================================
+   SNIPPET DISPLAY (retrieved snippet viewer)
+   ======================================================================== */
 
 .snippet-card {
   background: var(--surface);
@@ -757,6 +967,10 @@ kbd {
   line-height: 1.8;
 }
 
+/* ========================================================================
+   EXPIRY BADGE
+   ======================================================================== */
+
 .expiry-badge {
   display: inline-flex;
   align-items: center;
@@ -794,6 +1008,10 @@ kbd {
   color: var(--error);
 }
 
+/* ========================================================================
+   THEME TOGGLE
+   ======================================================================== */
+
 .theme-toggle {
   width: 34px;
   height: 34px;
@@ -804,8 +1022,8 @@ kbd {
   display: grid;
   place-items: center;
   cursor: pointer;
-  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease, color 0.15s ease,
-    box-shadow 0.15s ease;
+  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease,
+    color 0.15s ease, box-shadow 0.15s ease;
   box-shadow: var(--shadow-xs);
 }
 
@@ -817,6 +1035,15 @@ kbd {
   box-shadow: var(--shadow-sm);
 }
 
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.theme-toggle:active {
+  transform: scale(0.93);
+}
+
 .theme-toggle__placeholder {
   width: 34px;
   height: 34px;
@@ -825,24 +1052,112 @@ kbd {
   border: 1px solid var(--border-subtle);
 }
 
+/* ========================================================================
+   FEATURES SECTION
+   ======================================================================== */
+
+.features {
+  margin-top: 96px;
+  padding-bottom: 16px;
+}
+
+.features__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.feature-card {
+  padding: 28px 24px;
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-strong);
+}
+
+.feature-card__icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.feature-card__title {
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin: 0 0 8px;
+}
+
+.feature-card__desc {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ========================================================================
+   FOOTER
+   ======================================================================== */
+
 .footer {
   border-top: 1px solid var(--border-subtle);
-  padding: 22px 0;
+  padding: 24px 0;
 }
 
 .footer__inner {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 16px;
+}
+
+.footer__brand {
+  display: flex;
+  align-items: center;
+}
+
+.footer__logo-text {
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+}
+
+.footer__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
   font-size: 12px;
   color: var(--text-muted);
 }
 
 .footer__divider {
   color: var(--border-strong);
+  user-select: none;
 }
+
+/* ========================================================================
+   TOAST / SONNER
+   ======================================================================== */
 
 .toaster {
   font-family: var(--font-sans);
@@ -853,6 +1168,21 @@ kbd {
   background: var(--popover);
   color: var(--popover-foreground);
   box-shadow: var(--shadow-sm);
+}
+
+/* ========================================================================
+   ANIMATIONS
+   ======================================================================== */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-dot-pulse {
@@ -896,13 +1226,29 @@ kbd {
   }
 }
 
+/* ========================================================================
+   RESPONSIVE
+   ======================================================================== */
+
 @media (max-width: 900px) {
   .main {
-    padding: 56px 0 86px;
+    padding: 24px 0 86px;
+  }
+
+  .hero {
+    padding-top: 24px;
   }
 
   .hero__title {
     font-size: clamp(42px, 8vw, 60px);
+  }
+
+  .features__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .features {
+    margin-top: 72px;
   }
 }
 
@@ -924,5 +1270,29 @@ kbd {
   .hero__title {
     font-size: clamp(36px, 13vw, 48px);
     max-width: 100%;
+  }
+
+  .features__grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .features {
+    margin-top: 56px;
+  }
+
+  .feature-card {
+    padding: 22px 20px;
+  }
+
+  .footer__inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .code-pill__text {
+    font-size: 28px;
   }
 }
