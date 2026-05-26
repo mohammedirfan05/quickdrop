@@ -298,7 +298,7 @@ export default function ClipEditor() {
         <div className="divider__line" />
       </div>
 
-      <section className="card editor-card" aria-label="Retrieve snippet">
+      <section id="retrieve" className="card editor-card" aria-label="Retrieve snippet">
         <div className="card__body">
           <div className="input-shell">
             <input

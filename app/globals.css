@@ -163,147 +163,93 @@ textarea::placeholder {
   padding: 0 28px;
 }
 
-.nav {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  border-bottom: 1px solid var(--border-subtle);
-  background: var(--surface-overlay);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-}
-
-.nav__inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 64px;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.brand__mark {
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  background: var(--accent-gradient);
-  display: grid;
-  place-items: center;
-  box-shadow: var(--shadow-sm);
-}
-
-.brand__name {
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--text-primary);
-  font-family: var(--font-heading);
-}
-
-.badge {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent-text);
-  background: var(--accent-dim);
-  border: 1px solid var(--accent-border);
-  padding: 2px 8px;
-  border-radius: var(--radius-full);
-}
-
-.nav__actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.nav__note {
-  font-size: 12px;
-  color: var(--text-muted);
-}
-
 .main {
   flex: 1;
-  padding: 72px 0 96px;
+  padding: 72px 0 108px;
 }
 
 .hero {
-  position: relative;
-  margin-bottom: 48px;
-  z-index: 0;
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: -120px -80px auto;
-  height: 240px;
-  background: radial-gradient(closest-side, var(--hero-glow), transparent 72%);
-  opacity: 0.7;
-  filter: blur(20px);
-  animation: heroGlow 12s ease-in-out infinite;
-  pointer-events: none;
-  z-index: -1;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  max-width: 760px;
 }
 
 .hero__eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
+  padding: 6px 12px;
   border-radius: var(--radius-full);
-  background: var(--surface);
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--border);
-  box-shadow: var(--shadow-xs);
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text-secondary);
-}
-
-.status-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--success);
-  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
 }
 
 .hero__title {
   margin: 18px 0 16px;
   font-family: var(--font-heading);
-  font-size: clamp(36px, 6vw, 52px);
+  font-size: clamp(48px, 7vw, 80px);
   font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1.06;
+  letter-spacing: -0.06em;
+  line-height: 0.98;
   color: var(--text-primary);
-}
-
-.hero__accent {
-  background: var(--accent-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-fill-color: transparent;
+  max-width: 9ch;
 }
 
 .hero__subtitle {
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.7;
   color: var(--text-secondary);
-  max-width: 520px;
+  max-width: 560px;
   letter-spacing: -0.01em;
 }
 
-.hero__meta {
+.hero__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 22px;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.hero__actions .btn {
+  height: 46px;
+  padding: 0 22px;
+  border-radius: 14px;
+  font-size: 14px;
+}
+.editor-shell {
+  margin-top: 56px;
+  scroll-margin-top: 110px;
+}
+
+#retrieve {
+  scroll-margin-top: 110px;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.editor-shell {
+  scroll-margin-top: 110px;
+}
+
+#retrieve {
+  scroll-margin-top: 110px;
 }
 
 .pill {
@@ -952,16 +898,11 @@ kbd {
 
 @media (max-width: 900px) {
   .main {
-    padding: 56px 0 80px;
+    padding: 56px 0 86px;
   }
 
   .hero__title {
-    font-size: clamp(32px, 8vw, 44px);
-  }
-
-  .code-pill__text {
-    font-size: 28px;
-    letter-spacing: 0.22em;
+    font-size: clamp(42px, 8vw, 60px);
   }
 }
 
@@ -970,12 +911,18 @@ kbd {
     padding: 0 20px;
   }
 
-  .nav__note {
-    display: none;
+  .hero__actions {
+    flex-direction: column;
+    align-items: stretch;
   }
 
-  .code-pill {
-    flex-direction: column;
-    align-items: flex-start;
+  .hero__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero__title {
+    font-size: clamp(36px, 13vw, 48px);
+    max-width: 100%;
   }
 }

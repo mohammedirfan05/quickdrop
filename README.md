@@ -1,4 +1,4 @@
-# ClipLink
+# QuickDrop
 
 > Ultra-fast clipboard sharing. Paste. Share. Done.
 

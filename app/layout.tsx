@@ -24,14 +24,18 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "ClipLink: Paste. Share. Done.",
+  title: "QuickDrop: Paste. Share. Done.",
   description:
     "Ultra-fast clipboard sharing. Paste any text, get a 6-character code, share instantly. No login required.",
   keywords: ["pastebin", "clipboard", "code sharing", "snippet", "developer tool"],
   openGraph: {
-    title: "ClipLink: Paste. Share. Done.",
+    title: "QuickDrop: Paste. Share. Done.",
     description: "Ultra-fast clipboard sharing without friction.",
     type: "website",
+  },
+  icons: {
+    icon: "/api/favicon",
+    apple: "/api/favicon",
   },
 };
 
