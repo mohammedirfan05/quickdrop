@@ -1,4 +1,5 @@
 import ClipEditor from "@/components/ClipEditor";
+import HeroVisual from "@/components/HeroVisual";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import {
   ZapIcon,
@@ -43,12 +44,12 @@ export default function HomePage() {
         {/* Navigation */}
         <nav className="navbar" aria-label="Main navigation">
           <div className="container navbar__inner">
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               <a href="/" className="navbar__brand" aria-label="CodeSharePro Home">
                 <span className="navbar__logo" aria-hidden="true">
                   <svg
-                    width="16"
-                    height="16"
+                    width="15"
+                    height="15"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -70,85 +71,108 @@ export default function HomePage() {
             <div className="navbar__actions">
               <a href="#editor" className="navbar__link">Editor</a>
               <a href="#retrieve" className="navbar__link">Retrieve</a>
+              <span className="navbar__sep" aria-hidden="true" />
               <ThemeToggle />
             </div>
           </div>
         </nav>
 
         <main className="main container">
-          {/* Hero */}
-          <header className="hero">
-            <span className="hero__eyebrow">
-              <span className="hero__eyebrow-dot" aria-hidden="true" />
-              Ephemeral · Secure · Zero-friction
-            </span>
 
-            <h1 className="hero__title">
-              Code that vanishes.{" "}
-              <em>Speed&nbsp;that stays.</em>
-            </h1>
+          {/* ── HERO ─────────────────────────────────────────────────── */}
+          {/* Split layout: editorial text left, cinematic visual right */}
+          <div className="hero-wrapper">
+            <header className="hero">
+              <span className="hero__eyebrow">
+                <span className="hero__eyebrow-dot" aria-hidden="true" />
+                live · ephemeral · secure
+              </span>
 
-            <p className="hero__subtitle">
-              Generate a 6-character handoff code in one keystroke. Share it
-              anywhere — no accounts, no clutter. Snippets self-destruct in 10 minutes.
-            </p>
+              <h1 className="hero__title">
+                Code that vanishes.
+                <em>Speed&nbsp;that stays.</em>
+              </h1>
 
-            <div className="hero__actions">
-              <a className="btn btn--primary" href="#editor" id="hero-cta-share">
-                <ZapIcon size={14} />
-                Start sharing
-              </a>
-              <a className="btn btn--ghost" href="#retrieve" id="hero-cta-retrieve">
-                Retrieve snippet
-              </a>
-            </div>
+              <p className="hero__subtitle">
+                Generate a 6-character handoff code in one keystroke.
+                Snippets self-destruct in 10 minutes.
+                No accounts, no clutter.
+              </p>
 
-            {/* Social proof micro-stats */}
-            <div className="hero__stat-row" aria-label="Product statistics">
-              <div className="hero__stat">
-                <span className="hero__stat-value">6</span>
-                <span className="hero__stat-label">char code</span>
+              <div className="hero__actions">
+                <a className="btn btn--primary" href="#editor" id="hero-cta-share">
+                  <ZapIcon size={13} />
+                  Start sharing
+                </a>
+                <a className="btn btn--ghost" href="#retrieve" id="hero-cta-retrieve">
+                  Retrieve snippet
+                </a>
               </div>
-              <div className="hero__stat-sep" aria-hidden="true" />
-              <div className="hero__stat">
-                <span className="hero__stat-value">10m</span>
-                <span className="hero__stat-label">auto-expiry</span>
-              </div>
-              <div className="hero__stat-sep" aria-hidden="true" />
-              <div className="hero__stat">
-                <span className="hero__stat-value">20+</span>
-                <span className="hero__stat-label">languages</span>
-              </div>
-              <div className="hero__stat-sep" aria-hidden="true" />
-              <div className="hero__stat">
-                <span className="hero__stat-value">0</span>
-                <span className="hero__stat-label">signup needed</span>
-              </div>
-            </div>
-          </header>
 
-          {/* Editor — Layered glass panel */}
+              {/* Micro-stats — editorial, baseline-aligned, left-heavy */}
+              <div className="hero__stat-row" aria-label="Product statistics">
+                <div className="hero__stat">
+                  <span className="hero__stat-value">6</span>
+                  <span className="hero__stat-label">char code</span>
+                </div>
+                <div className="hero__stat-sep" aria-hidden="true" />
+                <div className="hero__stat">
+                  <span className="hero__stat-value">10m</span>
+                  <span className="hero__stat-label">auto-expiry</span>
+                </div>
+                <div className="hero__stat-sep" aria-hidden="true" />
+                <div className="hero__stat">
+                  <span className="hero__stat-value">20+</span>
+                  <span className="hero__stat-label">languages</span>
+                </div>
+                <div className="hero__stat-sep" aria-hidden="true" />
+                <div className="hero__stat">
+                  <span className="hero__stat-value">0</span>
+                  <span className="hero__stat-label">signup needed</span>
+                </div>
+              </div>
+            </header>
+
+            {/* Right side — live animated snippet session */}
+            <HeroVisual />
+          </div>
+
+          {/* ── EDITOR ───────────────────────────────────────────────── */}
           <section id="editor" className="editor-shell" aria-label="Code sharing editor">
             <ClipEditor />
           </section>
 
-          {/* Features — Bento grid */}
+          {/* ── FEATURES — Asymmetric bento ──────────────────────────── */}
           <section className="features" aria-label="Features">
-            <p className="features__sub">
-              Built for developer handoffs. Designed for speed.
-            </p>
-            <h2 className="features__heading">Everything you need. Nothing you don&apos;t.</h2>
+            {/* Editorial header — two-column, not centered */}
+            <div className="features__header">
+              <div className="features__heading-group">
+                <span className="features__overline">Why CodeSharePro</span>
+                <h2 className="features__heading">
+                  Everything you need.{"\u00A0"}
+                  <br />Nothing you don&apos;t.
+                </h2>
+              </div>
+              <p className="features__aside">
+                Built for developer handoffs. No fluff, no signups.
+                Just a clean tool that respects your time.
+              </p>
+            </div>
 
+            {/* Asymmetric 3-column grid — intentional hierarchy */}
             <div className="bento-grid">
-              {/* Wide — Instant sharing */}
-              <article className="bento-card bento-card--wide" aria-label="Instant sharing feature">
+
+              {/* ① Dominant — Instant Sharing — tall left column */}
+              <article className="bento-card bento-card--dominant" aria-label="Instant sharing feature">
                 <div className="bento-card__icon">
-                  <ZapIcon size={18} />
+                  <ZapIcon size={17} />
                 </div>
                 <h3 className="bento-card__title">Instant Sharing</h3>
                 <p className="bento-card__desc">
-                  Paste any content and receive a memorable 6-character code immediately.
-                  No waiting, no processing. Share it verbally, via chat, or via any channel.
+                  Paste any content — code, configs, environment variables, notes —
+                  and receive a memorable 6-character code immediately.
+                  Share verbally, drop it in chat, or read it aloud.
+                  No waiting. No processing delay.
                 </p>
                 <div className="bento-speed-bar" aria-label="Sharing speed metrics">
                   <div className="bento-speed-row">
@@ -175,14 +199,14 @@ export default function HomePage() {
                 </div>
               </article>
 
-              {/* Syntax highlighting */}
-              <article className="bento-card" aria-label="Syntax highlighting feature">
+              {/* ② Secondary — Syntax highlighting */}
+              <article className="bento-card bento-card--secondary" aria-label="Syntax highlighting feature">
                 <div className="bento-card__icon">
-                  <CodeXmlIcon size={18} />
+                  <CodeXmlIcon size={17} />
                 </div>
                 <h3 className="bento-card__title">Syntax Highlighting</h3>
                 <p className="bento-card__desc">
-                  Auto-detects 20+ languages. Renders beautifully with Shiki.
+                  Auto-detects 20+ languages. Rendered with Shiki.
                 </p>
                 <div className="bento-lang-chips" aria-label="Supported languages">
                   {["TypeScript", "Python", "Rust", "Go", "SQL", "YAML", "JSON", "Bash"].map((lang) => (
@@ -191,14 +215,14 @@ export default function HomePage() {
                 </div>
               </article>
 
-              {/* Dark accent — No login */}
+              {/* ③ Accent — Zero friction */}
               <article className="bento-card bento-card--accent" aria-label="No signup required feature">
                 <div className="bento-card__icon">
-                  <UserXIcon size={18} />
+                  <UserXIcon size={17} />
                 </div>
                 <h3 className="bento-card__title">Zero Friction</h3>
                 <p className="bento-card__desc">
-                  No accounts. No passwords. No tracking. Open the page and start sharing.
+                  No accounts. No passwords. No tracking.
                 </p>
                 <div className="bento-steps" aria-label="Steps to share">
                   <div className="bento-step">
@@ -211,39 +235,40 @@ export default function HomePage() {
                   </div>
                   <div className="bento-step">
                     <span className="bento-step__num">3</span>
-                    <span>Share the code verbally or via chat</span>
+                    <span>Share it anywhere</span>
                   </div>
                 </div>
               </article>
 
-              {/* Auto-expiry */}
-              <article className="bento-card" aria-label="Auto-expiry feature">
+              {/* ④ Small — Auto-expiry */}
+              <article className="bento-card bento-card--small-a" aria-label="Auto-expiry feature">
                 <div className="bento-card__icon">
-                  <ClockIcon size={18} />
+                  <ClockIcon size={17} />
                 </div>
                 <h3 className="bento-card__title">Auto-Expiry</h3>
                 <p className="bento-card__desc">
-                  Snippets self-destruct after 10 minutes. No permanent storage, no data lingering.
+                  Snippets self-destruct after 10 minutes.
                 </p>
                 <div className="bento-timer" aria-label="Expiry countdown example">
                   <span className="bento-timer__icon" aria-hidden="true">
-                    <ClockIcon size={14} />
+                    <ClockIcon size={13} />
                   </span>
-                  <span className="bento-timer__label">Snippet expires in</span>
+                  <span className="bento-timer__label">Expires in</span>
                   <span className="bento-timer__value">09:42</span>
                 </div>
               </article>
 
-              {/* Privacy */}
-              <article className="bento-card" aria-label="Privacy feature">
+              {/* ⑤ Small — Privacy */}
+              <article className="bento-card bento-card--small-b" aria-label="Privacy feature">
                 <div className="bento-card__icon">
-                  <ShieldCheckIcon size={18} />
+                  <ShieldCheckIcon size={17} />
                 </div>
                 <h3 className="bento-card__title">Privacy by Design</h3>
                 <p className="bento-card__desc">
-                  Ephemeral storage with no logs retained. What you share stays between you and your recipient.
+                  Ephemeral storage. No logs retained after expiry.
                 </p>
               </article>
+
             </div>
           </section>
         </main>
