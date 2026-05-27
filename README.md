@@ -52,9 +52,9 @@ The app is a single Next.js application with a small server API surface:
 
 ```mermaid
 flowchart LR
-  A[Browser UI] -->|POST /api/create| B[Create Route]
-  A -->|GET /api/fetch/[code]| C[Fetch Route]
-  A -->|POST /api/highlight| D[Highlight Route]
+  A[Browser UI] -->|"POST /api/create"| B[Create Route]
+  A -->|"GET /api/fetch/:code"| C[Fetch Route]
+  A -->|"POST /api/highlight"| D[Highlight Route]
 
   B --> E[(Upstash Redis)]
   C --> E
