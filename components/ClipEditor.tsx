@@ -321,6 +321,9 @@ export default function ClipEditor() {
               className="code-input"
               data-filled={codeInput.length > 0 ? "true" : "false"}
             />
+            <span className="input-icon" aria-hidden="true">
+              <SearchIcon size={15} />
+            </span>
           </div>
 
           <button
