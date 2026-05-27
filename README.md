@@ -4,6 +4,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)
 ![Upstash Redis](https://img.shields.io/badge/Upstash-Redis-0F172A?logo=redis&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Vercel-ready-black?logo=vercel)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?logo=opensourceinitiative)
 
 > Instant code and text sharing with ephemeral, Redis-backed snippets.
 
@@ -375,4 +376,4 @@ Deployment checklist:
 
 ## License
 
-No license file is currently committed in this repository. Add one before publishing the project as open source.
+CodeSharePro is released under the MIT License — see [LICENSE](LICENSE) for the full text.
